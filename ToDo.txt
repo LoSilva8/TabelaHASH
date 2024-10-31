@@ -1,0 +1,3 @@
+Implementar o método readNamesFromCSV() para ler o arquivo
+Adicionar tratamento de exceções
+Criar o relatório PDF com os resultados
