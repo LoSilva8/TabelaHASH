@@ -1,2 +1,0 @@
-Adicionar tratamento de exceções
-Criar o relatório PDF com os resultados
