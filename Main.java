@@ -58,8 +58,8 @@ public class Main {
             System.out.println("Tempo de Busca: " + tempoSearchMelhorada + " ns");
             printColisoesPorPosicao("Melhorada", tabelaMelhorada.getColisoesPorPosicao());
             
-            printDistribution("Simples", tabelaSimples.calculateDistribution());
-            printDistribution("Melhorada", tabelaMelhorada.calculateDistribution());
+            printDistribuidor("Simples", tabelaSimples.indicePorPos());
+            printDistribuidor("Melhorada", tabelaMelhorada.indicePorPos());
             
         } catch (IOException e) {
             System.err.println("Erro ao ler o arquivo CSV: " + e.getMessage());
@@ -73,16 +73,16 @@ public class Main {
         try (BufferedReader br = new BufferedReader(
                 new FileReader(filename, StandardCharsets.UTF_8))) {
             
-            String line;
+            String linha;
             boolean primeiraLinha = true;
             
-            while ((line = br.readLine()) != null) {
+            while ((linha = br.readLine()) != null) {
                 if (primeiraLinha) {
                     primeiraLinha = false;
                     continue;
                 }
                 
-                String name = line.replace("\"", "").trim();
+                String name = linha.replace("\"", "").trim();
                 
                 if (!name.isEmpty()) {
                     names.add(name);
@@ -93,13 +93,13 @@ public class Main {
         return names;
     }
     
-    private static void printDistribution(String tableName, int[] distribution) {
+    private static void printDistribuidor(String tableName, int[] distribuidor) {
         System.out.println("\nDistribuicao de Chaves - Tabela " + tableName);
         int maxItensPorBucket = 0;
         int bucketsPreenchidos = 0;
         int bucketsVazios = 0;
         
-        for (int count : distribution) {
+        for (int count : distribuidor) {
             if (count > 0) {
                 bucketsPreenchidos++;
                 maxItensPorBucket = Math.max(maxItensPorBucket, count);

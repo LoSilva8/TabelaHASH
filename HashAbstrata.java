@@ -42,15 +42,15 @@ public abstract class HashAbstrata {
         return false;
     }
 
-    public int[] calculateDistribution() {
-        int[] distribution = new int[tamanho_tabela];
+    public int[] indicePorPos() {
+        int[] distribuidor = new int[tamanho_tabela];
         for (String item : tabela) {
             if (item != null) {
                 int index = hash(item);
-                distribution[index]++;
+                distribuidor[index]++;
             }
         }
-        return distribution;
+        return distribuidor;
     }
 
     public int getColisoes() {
