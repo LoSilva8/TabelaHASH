@@ -10,6 +10,10 @@ public class Main {
         try {
             List<String> names = readNamesFromCSV("female_names.txt");
             System.out.println("Numero de nomes lidos: " + names.size());
+
+            if (names.size() > HashAbstrata.tamanho_tabela) {
+                System.out.println("Numero de nomes maior que o tamanho da tabela");
+            }
             
             HashSimples tabelaSimples = new HashSimples();
             HashMelhorada tabelaMelhorada = new HashMelhorada();

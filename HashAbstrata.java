@@ -3,41 +3,51 @@ public abstract class HashAbstrata {
     protected String[] tabela;
     protected int colisoes;
     protected int[] colisoesPorPosicao;
+    protected int elementCount;
 
     public HashAbstrata() {
         tabela = new String[tamanho_tabela];
         colisoes = 0;
         colisoesPorPosicao = new int[tamanho_tabela];
+        elementCount = 0;
     }
 
     protected abstract int hash(String key);
 
     public void insert(String key) {
-        int index = hash(key);
+        if (elementCount >= tamanho_tabela) {
+            throw new IllegalStateException("Tabela hash está cheia");
+        }
+        
+        int originalIndex = hash(key);
+        int index = originalIndex;
+        
+        if (tabela[index] != null) {
+            colisoes++;
+            colisoesPorPosicao[originalIndex]++;
+        }
         
         while (tabela[index] != null) {
-            colisoes++;
-            colisoesPorPosicao[index]++;
             index = (index + 1) % tamanho_tabela;
         }
         
         tabela[index] = key;
+        elementCount++;
     }
 
     public boolean search(String key) {
         int index = hash(key);
         int originalIndex = index;
         
-        while (tabela[index] != null) {
+        do {
+            if (tabela[index] == null) {
+                return false;
+            }
             if (tabela[index].equals(key)) {
                 return true;
             }
             index = (index + 1) % tamanho_tabela;
-            
-            if (index == originalIndex) {
-                break;
-            }
-        }
+        } while (index != originalIndex);
         
         return false;
     }
@@ -59,5 +69,13 @@ public abstract class HashAbstrata {
     
     public int[] getColisoesPorPosicao() {
         return colisoesPorPosicao;
+    }
+
+    public int getElementCount() {
+        return elementCount;
+    }
+    
+    public double getFatorCarga() {
+        return (double) elementCount / tamanho_tabela;
     }
 }
